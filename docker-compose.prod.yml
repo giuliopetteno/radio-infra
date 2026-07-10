@@ -1,0 +1,3 @@
+include:
+  - path: radio-registry/docker-compose.prod.yml
+  - path: radio-analytics/docker-compose.prod.yml
