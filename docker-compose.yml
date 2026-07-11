@@ -1,6 +1,6 @@
 include:
-  - path: radio-registry/docker-compose.yml
-  - path: radio-analytics/docker-compose.yml
+  - path: ../radio-registry/docker-compose.yml
+  - path: ../radio-analytics/docker-compose.yml
 
 networks:
   radio-net:
