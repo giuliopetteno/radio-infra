@@ -1,3 +1,5 @@
+name: radio-deploy-default
+
 include:
   - path: ../radio-registry/docker-compose.yml
   - path: ../radio-analytics/docker-compose.yml
@@ -5,3 +7,12 @@ include:
 networks:
   radio-net:
     driver: bridge
+
+services:
+  radio-registry:
+    ports:
+      - "8080:8080"
+
+  radio-analytics:
+    ports:
+      - "8081:8081"
