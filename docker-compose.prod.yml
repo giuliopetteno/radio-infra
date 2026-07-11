@@ -1,3 +1,20 @@
+name: radio-deploy-prod
+
 include:
   - path: ../radio-registry/docker-compose.prod.yml
+    env_file: ../radio-registry/.env.prod
   - path: ../radio-analytics/docker-compose.prod.yml
+    env_file: ../radio-analytics/.env.prod
+
+networks:
+  radio-net:
+    driver: bridge
+
+services:
+  radio-registry:
+    ports:
+      - "8443:8443"
+
+  radio-analytics:
+    ports:
+      - "8081:8081"
