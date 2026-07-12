@@ -1,4 +1,4 @@
-name: radio-deploy-default
+name: radio-infra-default
 
 include:
   - path: ../radio-registry/docker-compose.yml
