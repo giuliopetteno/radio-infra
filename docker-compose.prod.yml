@@ -1,4 +1,4 @@
-name: radio-deploy-prod
+name: radio-infra-prod
 
 include:
   - path: ../radio-registry/docker-compose.prod.yml

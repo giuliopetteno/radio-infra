@@ -1,4 +1,4 @@
-# Radio Ecosystem Orchestrator (Radio Deploy)
+# Radio Ecosystem Orchestrator (Radio Infra)
 
 Orchestration repository for the **radio-registry** and **radio-analytics** microservices.
 
