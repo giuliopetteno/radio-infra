@@ -10,4 +10,3 @@ This repository does not contain application code — it wires together the inde
 - `radio-analytics` — consumer service (medical equipment analytics system)
 - Services communicate exclusively via **Apache Kafka**; they share no code and are versioned in separate repositories
 - A shared Docker network (`radio-net`) connects both containers
-- This repo uses Compose's [`include`](https://docs.docker.com/compose/how-tos/multiple-compose-files/include/) feature to pull in each service's own `docker-compose.yml` (or `docker-compose.prod.yml` for production environment), keeping ownership of service config inside each service's repository

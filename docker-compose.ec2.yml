@@ -1,0 +1,56 @@
+name: radio-infra-ec2
+
+networks:
+  radio-net:
+    driver: bridge
+
+services:
+  radio-registry:
+    image: ${CONTAINER_REGISTRY_REPO}/radio-registry:latest
+    container_name: radio-registry
+    restart: unless-stopped
+    env_file: .env.prod.registry
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SSL_KEYSTORE_PATH=/app/keystore.p12
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+    volumes:
+      - ./certs/keystore.p12:/app/keystore.p12:ro
+    ports:
+      - "8443:8443"
+    networks:
+      - radio-net
+
+  radio-analytics:
+    image: ${CONTAINER_REGISTRY_REPO}/radio-analytics:latest
+    container_name: radio-analytics
+    restart: unless-stopped
+    env_file: .env.prod.analytics
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+    ports:
+      - "8081:8081"
+    networks:
+      - radio-net
+
+  kafka:
+    image: apache/kafka:4.3.1
+    container_name: kafka
+    restart: unless-stopped
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:29092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    networks:
+      - radio-net
+
+volumes:
+  kafka-data:
+    name: radio-kafka-data
