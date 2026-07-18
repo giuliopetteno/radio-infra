@@ -9,11 +9,23 @@ services:
     image: ${CONTAINER_REGISTRY_REPO}/radio-registry:latest
     container_name: radio-registry
     restart: unless-stopped
-    env_file: .env.prod.registry
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_APP_NAME=radio-registry
+      - SERVER_PORT=8443
+      - HIBERNATE_DEFAULT_SCHEMA=radio_registry
+      - HIBERNATE_DDL_AUTO=none
+      - HIBERNATE_FORMAT_SQL=false
+      - JPA_SHOW_SQL=false
+      - EXPOSURE_INCLUDE=health,info,metrics
+      - SHOW_DETAILS=when_authorized
+      - SPRING_SECURITY_LOG_LEVEL=ERROR
       - SSL_KEYSTORE_PATH=/app/keystore.p12
       - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - DB_URL=${DB_URL}
+      - DB_SCHEMA=radio_registry
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SSL_KEYSTORE_PASSWORD=${REGISTRY_SSL_KEYSTORE_PASSWORD}
     volumes:
       - ./certs/keystore.p12:/app/keystore.p12:ro
     ports:
@@ -25,10 +37,21 @@ services:
     image: ${CONTAINER_REGISTRY_REPO}/radio-analytics:latest
     container_name: radio-analytics
     restart: unless-stopped
-    env_file: .env.prod.analytics
     environment:
+      - SPRING_APP_NAME=radio-analytics
+      - SERVER_PORT=8081
+      - HIBERNATE_DEFAULT_SCHEMA=radio_analytics
+      - HIBERNATE_DDL_AUTO=none
+      - HIBERNATE_FORMAT_SQL=false
+      - JPA_SHOW_SQL=false
+      - EXPOSURE_INCLUDE=health,info,metrics,prometheus
+      - SHOW_DETAILS=when_authorized
       - SPRING_PROFILES_ACTIVE=prod
       - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - DB_URL=${DB_URL}
+      - DB_SCHEMA=radio_analytics
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - "8081:8081"
     networks:

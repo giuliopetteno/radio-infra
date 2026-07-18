@@ -1,4 +1,4 @@
 .idea
 radio-infra.iml
-.env.prod.registry
-.env.prod.analytics
+.env*
+.env.*
