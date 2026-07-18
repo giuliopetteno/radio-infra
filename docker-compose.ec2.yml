@@ -48,7 +48,6 @@ services:
       - JPA_SHOW_SQL=false
       - EXPOSURE_INCLUDE=health,info,metrics,prometheus
       - SHOW_DETAILS=when_authorized
-      - SPRING_PROFILES_ACTIVE=prod
       - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
       - DB_URL=${DB_URL}
       - DB_SCHEMA=radio_analytics
