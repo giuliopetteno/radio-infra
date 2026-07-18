@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
     environment:
       - SPRING_APP_NAME=radio-registry
+      - SPRING_PROFILES_ACTIVE=prod
       - SERVER_PORT=8443
       - HIBERNATE_DEFAULT_SCHEMA=radio_registry
       - HIBERNATE_DDL_AUTO=none
@@ -39,6 +40,7 @@ services:
     restart: unless-stopped
     environment:
       - SPRING_APP_NAME=radio-analytics
+      - SPRING_PROFILES_ACTIVE=prod
       - SERVER_PORT=8081
       - HIBERNATE_DEFAULT_SCHEMA=radio_analytics
       - HIBERNATE_DDL_AUTO=none
