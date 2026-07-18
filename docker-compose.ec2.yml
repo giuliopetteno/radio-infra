@@ -25,7 +25,7 @@ services:
       - DB_SCHEMA=radio_registry
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
-      - SSL_KEYSTORE_PASSWORD=${REGISTRY_SSL_KEYSTORE_PASSWORD}
+      - SSL_KEYSTORE_PASSWORD=${SSL_KEYSTORE_PASSWORD}
     volumes:
       - ./certs/keystore.p12:/app/keystore.p12:ro
     ports:
