@@ -1,4 +1,4 @@
-name: radio-infra-ec2
+name: radio-infra-aws
 
 networks:
   radio-net:
