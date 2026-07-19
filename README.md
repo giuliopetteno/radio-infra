@@ -10,8 +10,8 @@ This repository does not contain application code — it wires together the inde
 
 ## Architecture
 
-- `radio-registry` — producer service (medical equipment management system)
-- `radio-analytics` — consumer service (medical equipment analytics system)
+- `radio-registry` — producer service (medical devices management system)
+- `radio-analytics` — consumer service (medical devices analytics system)
 - Services communicate exclusively via **Apache Kafka**; they share no code and are versioned in separate repositories
 - A shared Docker network (`radio-net`) connects both containers
 
