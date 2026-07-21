@@ -1,10 +1,10 @@
 # Radio Ecosystem Orchestrator (Radio Infra)
 
-Orchestration and deployment repository for the **radio-registry** and **radio-analytics** microservices.
+Orchestration and deployment repository for the Radio ecosystem microservices.
 
 This repository does not contain application code — it wires together the independent [`radio-registry`](https://github.com/giuliopetteno/radio-registry) and [`radio-analytics`](https://github.com/giuliopetteno/radio-analytics) repositories via Docker Compose, and drives their automated deployment to Amazon Web Services (AWS).
 
-> **⚠️ Work in Progress**
+> **🚧 Work in Progress**
 >
 > This project is currently under active development and serves as a demonstration of modern DevOps and cloud infrastructure practices.
 
