@@ -13,11 +13,9 @@ services:
   radio-registry:
     ports:
       - "8080:8080"
-
   radio-analytics:
     ports:
       - "8081:8081"
-
   kafka:
     image: apache/kafka:4.3.1
     container_name: kafka
@@ -31,5 +29,66 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+    networks:
+      - radio-net
+  alloy:
+    image: grafana/alloy:v1.18.0
+    container_name: alloy
+    command: run --server.http.listen-addr=0.0.0.0:12345 /etc/alloy/config.alloy
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "12345:12345"
+    volumes:
+      - ./observability/alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - radio-net
+  prometheus:
+    image: prom/prometheus:v3.13.2
+    container_name: prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-remote-write-receiver
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - radio-net
+  loki:
+    image: grafana/loki:3.7.4
+    container_name: loki
+    command: [ "-config.file=/etc/loki/loki.yml" ]
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./observability/loki/loki.yml:/etc/loki/loki.yml:ro
+    networks:
+      - radio-net
+  tempo:
+    image: grafana/tempo:3.0.2
+    container_name: tempo
+    command: [ "-config.file=/etc/tempo/tempo.yml" ]
+    ports:
+      - "3200:3200"
+    volumes:
+      - ./observability/tempo/tempo.yml:/etc/tempo/tempo.yml:ro
+    networks:
+      - radio-net
+  grafana:
+    image: grafana/grafana:13.1.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+      - tempo
+      - loki
     networks:
       - radio-net
