@@ -2,3 +2,7 @@
 radio-infra.iml
 .env*
 .env.*
+*.swp
+aws/
+awscliv2.zip
+certs/
