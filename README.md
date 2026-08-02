@@ -33,5 +33,5 @@ This repo supports three distinct Compose configurations:
 	- Automated CI/CD: GitHub Actions (cross-repo triggering) → OIDC → ECR → SSM Run Command deploy
 	- IAM: least-privilege roles throughout (GitHub Actions OIDC roles, EC2 instance role)
 	- Secrets management via AWS Systems Manager Parameter Store
-	- TLS via Let's Encrypt/Certbot, Route 53 DNS-01 validation, automated renewal
-	- Route 53, Elastic IP + custom domain (`giuliopetteno.dev`)
+    - Nginx reverse proxy for name-based routing, with TLS via Let's Encrypt and automated renewal
+	- DNS-based service routing under a custom domain (`giuliopetteno.dev`) via Route 53 with Elastic IP
