@@ -22,6 +22,7 @@ services:
     container_name: kafka
     restart: unless-stopped
     environment:
+      KAFKA_HEAP_OPTS: "-Xmx512m -Xms256m"
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_LISTENERS: PLAINTEXT://:29092,CONTROLLER://:9093
