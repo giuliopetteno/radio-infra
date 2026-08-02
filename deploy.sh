@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -o errtrace
 
 LOG_FILE="/var/log/radio-infra.log"
 
