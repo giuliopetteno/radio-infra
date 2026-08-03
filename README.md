@@ -11,6 +11,13 @@ Microservices application traces, metrics, and logs are collected by **Alloy** a
 >
 > This project is currently under active development and serves as a demonstration of modern DevOps and cloud infrastructure practices.
 
+## Live Demo
+
+Grafana dashboards are available at:
+[radio-analytics.giuliopetteno.dev](https://giuliopetteno.s.gy/radio-analytics) *(short link for click tracking)*
+
+> **Note:** Anonymous read-only access — no login required.
+
 ## Features
 
 - Containerization
