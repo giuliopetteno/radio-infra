@@ -7,7 +7,17 @@ otelcol.receiver.otlp "default" {
   }
   output {
     metrics = [otelcol.exporter.prometheus.default.input]
-    traces = [otelcol.exporter.otlp.tempo.input]
+    traces  = [
+      otelcol.exporter.otlp.tempo.input,
+      otelcol.connector.servicegraph.default.input,
+    ]
+  }
+}
+
+otelcol.connector.servicegraph "default" {
+  dimensions = ["service.name"]
+  output {
+    metrics = [otelcol.exporter.prometheus.default.input]
   }
 }
 
