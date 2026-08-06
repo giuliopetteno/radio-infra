@@ -4,19 +4,19 @@
   "metadata": {
     "name": "ad9wm9g",
     "namespace": "default",
-    "uid": "4c96dc26-8587-4509-b0c6-4013afe06f5e",
-    "resourceVersion": "1785881194422993",
-    "generation": 17,
-    "creationTimestamp": "2026-08-04T14:42:00Z",
+    "uid": "8d0e4f36-666b-4e8b-8376-eb4b71195e1b",
+    "resourceVersion": "1786042676369999",
+    "generation": 13,
+    "creationTimestamp": "2026-08-06T18:43:04Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "3988042450681856"
+      "grafana.app/deprecatedInternalID": "269884748423168"
     },
     "annotations": {
       "grafana.app/createdBy": "user:aftzdd1pbkt8gb",
       "grafana.app/folder": "",
       "grafana.app/saved-from-ui": "Grafana v13.1.1 (e784b7782a)",
       "grafana.app/updatedBy": "user:aftzdd1pbkt8gb",
-      "grafana.app/updatedTimestamp": "2026-08-04T22:06:34Z"
+      "grafana.app/updatedTimestamp": "2026-08-06T18:57:56Z"
     }
   },
   "spec": {
@@ -69,7 +69,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "topk(\r\n  20,\r\n  round(\r\n    sum by (uri, method) (\r\n      increase(\r\n        http_server_requests_milliseconds_count{\r\n          application=\"radio-registry\",\r\n          uri!~\"/swagger-ui.*|/v3/api-docs.*|/actuator.*\",\r\n          uri!=\"UNKNOWN\"\r\n        }[$__range]\r\n      )\r\n    )\r\n  )\r\n)",
+                        "expr": "topk(\r\n  20,\r\n  sum by (uri, method) (\r\n    http_server_requests_milliseconds_count{\r\n      application=\"radio-registry\",\r\n      uri!~\"/swagger-ui.*|/v3/api-docs.*|/actuator.*\",\r\n      uri!=\"UNKNOWN\"\r\n    }\r\n  )\r\n)",
                         "format": "time_series",
                         "instant": true,
                         "legendFormat": "__auto",
@@ -104,7 +104,7 @@
                 "maxVizHeight": 300,
                 "minVizHeight": 16,
                 "minVizWidth": 8,
-                "namePlacement": "auto",
+                "namePlacement": "top",
                 "orientation": "horizontal",
                 "reduceOptions": {
                   "calcs": [
@@ -115,6 +115,9 @@
                 },
                 "showUnfilled": true,
                 "sizing": "auto",
+                "text": {
+                  "valueSize": 12
+                },
                 "valueMode": "color"
               },
               "fieldConfig": {
@@ -124,11 +127,11 @@
                     "steps": [
                       {
                         "value": 0,
-                        "color": "green"
+                        "color": "light-blue"
                       },
                       {
                         "value": 60,
-                        "color": "orange"
+                        "color": "semi-dark-orange"
                       },
                       {
                         "value": 80,
@@ -187,7 +190,7 @@
                         ],
                         "limit": 100,
                         "metricsQueryType": "range",
-                        "query": "{((resource.service.name=\"radio-registry\" || resource.service.name=\"radio-analytics\") && duration > 100ms) || name=\"device-events send\"}",
+                        "query": "{\r\n  resource.service.name = \"radio-registry\"\r\n  && name != \"task outboxEventPublisher.publishOutboxEvents\"\r\n}\r\n||\r\n{\r\n  resource.service.name = \"radio-analytics\"\r\n}",
                         "queryType": "traceql",
                         "serviceMapUseNativeHistograms": false,
                         "spss": 50,
@@ -271,7 +274,7 @@
                     "properties": [
                       {
                         "id": "custom.width",
-                        "value": 150
+                        "value": 227
                       }
                     ]
                   },
@@ -284,7 +287,7 @@
                     "properties": [
                       {
                         "id": "custom.width",
-                        "value": 157
+                        "value": 120
                       }
                     ]
                   },
@@ -297,7 +300,7 @@
                     "properties": [
                       {
                         "id": "custom.width",
-                        "value": 201
+                        "value": 168
                       }
                     ]
                   },
@@ -310,7 +313,7 @@
                     "properties": [
                       {
                         "id": "custom.width",
-                        "value": 112
+                        "value": 94
                       }
                     ]
                   },
@@ -323,7 +326,7 @@
                     "properties": [
                       {
                         "id": "custom.width",
-                        "value": 349
+                        "value": 173
                       }
                     ]
                   },
@@ -358,35 +361,339 @@
             }
           }
         }
+      },
+      "panel-3": {
+        "kind": "Panel",
+        "spec": {
+          "id": 3,
+          "title": "Recent Logs",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "loki",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "loki"
+                      },
+                      "spec": {
+                        "direction": "backward",
+                        "editorMode": "code",
+                        "expr": "{service_name=~\"radio-registry|radio-analytics\"} | json | level != \"INFO\"",
+                        "queryType": "range"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {
+                "timeFrom": "7d"
+              }
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "logs",
+            "version": "13.1.1",
+            "spec": {
+              "options": {
+                "dedupStrategy": "none",
+                "enableInfiniteScrolling": false,
+                "enableLogDetails": true,
+                "prettifyLogMessage": true,
+                "showControls": false,
+                "showFieldSelector": false,
+                "showLevel": true,
+                "showTime": false,
+                "sortOrder": "Descending",
+                "timestampResolution": "ms",
+                "unwrappedColumns": false,
+                "wrapLogMessage": false
+              },
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-4": {
+        "kind": "Panel",
+        "spec": {
+          "id": 4,
+          "title": "Service Graph",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "tempo",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "tempo"
+                      },
+                      "spec": {
+                        "limit": 20,
+                        "metricsQueryType": "range",
+                        "queryType": "serviceMap",
+                        "serviceMapUseNativeHistograms": false,
+                        "tableType": "traces"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "nodeGraph",
+            "version": "13.1.1",
+            "spec": {
+              "options": {
+                "edges": {},
+                "layoutAlgorithm": "layered",
+                "nodes": {},
+                "zoomMode": "cooperative"
+              },
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              }
+            }
+          },
+          "transparent": true
+        }
+      },
+      "panel-5": {
+        "kind": "Panel",
+        "spec": {
+          "id": 5,
+          "title": "Kafka events counter",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "prometheus",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "prometheus"
+                      },
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum(kafka_consumer_fetch_manager_records_consumed_total{application=\"radio-analytics\"}) by (topic)",
+                        "format": "time_series",
+                        "instant": true,
+                        "legendFormat": "__auto",
+                        "range": false
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "bargauge",
+            "version": "13.1.1",
+            "spec": {
+              "options": {
+                "displayMode": "basic",
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "overflow": "ellipsis",
+                  "placement": "bottom",
+                  "showLegend": false
+                },
+                "maxVizHeight": 300,
+                "minVizHeight": 16,
+                "minVizWidth": 8,
+                "namePlacement": "auto",
+                "orientation": "horizontal",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showUnfilled": true,
+                "sizing": "auto",
+                "valueMode": "color"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "percentage",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "light-blue"
+                      },
+                      {
+                        "value": 60,
+                        "color": "orange"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
       }
     },
     "layout": {
-      "kind": "GridLayout",
+      "kind": "RowsLayout",
       "spec": {
-        "items": [
+        "rows": [
           {
-            "kind": "GridLayoutItem",
+            "kind": "RowsLayoutRow",
             "spec": {
-              "x": 0,
-              "y": 0,
-              "width": 11,
-              "height": 8,
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-1"
+              "title": "Overview",
+              "collapse": false,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 2,
+                        "y": 0,
+                        "width": 19,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-4"
+                        }
+                      }
+                    }
+                  ]
+                }
               }
             }
           },
           {
-            "kind": "GridLayoutItem",
+            "kind": "RowsLayoutRow",
             "spec": {
-              "x": 0,
-              "y": 8,
-              "width": 17,
-              "height": 10,
-              "element": {
-                "kind": "ElementReference",
-                "name": "panel-2"
+              "title": "Traffic",
+              "collapse": false,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 15,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-1"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 15,
+                        "y": 0,
+                        "width": 9,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-5"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "title": "Logs & Traces",
+              "collapse": false,
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 10,
+                        "height": 9,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-3"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 10,
+                        "y": 0,
+                        "width": 14,
+                        "height": 9,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-2"
+                        }
+                      }
+                    }
+                  ]
+                }
               }
             }
           }
