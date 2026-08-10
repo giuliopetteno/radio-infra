@@ -29,6 +29,7 @@ fetch_param "/radio/prod/shared/DB_USERNAME" "DB_USERNAME"
 fetch_param "/radio/prod/shared/DB_PASSWORD" "DB_PASSWORD"
 fetch_param "/radio/prod/shared/GRAFANA_ADMIN_PASSWORD" "GRAFANA_ADMIN_PASSWORD"
 fetch_param "/radio/prod/registry/SSL_KEYSTORE_PASSWORD" "SSL_KEYSTORE_PASSWORD"
+fetch_param "/radio/prod/registry/JWT_SECRET" "JWT_SECRET"
 
 chmod 600 .env
 log "Secrets FETCHED successfully"

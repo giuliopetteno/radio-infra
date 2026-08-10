@@ -5,8 +5,8 @@
     "name": "ad9wm9g",
     "namespace": "default",
     "uid": "8d0e4f36-666b-4e8b-8376-eb4b71195e1b",
-    "resourceVersion": "1786217594414998",
-    "generation": 22,
+    "resourceVersion": "1786225934925985",
+    "generation": 26,
     "creationTimestamp": "2026-08-06T18:43:04Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "269884748423168"
@@ -16,7 +16,7 @@
       "grafana.app/folder": "",
       "grafana.app/saved-from-ui": "Grafana v13.1.1 (e784b7782a)",
       "grafana.app/updatedBy": "user:aftzdd1pbkt8gb",
-      "grafana.app/updatedTimestamp": "2026-08-08T19:33:14Z"
+      "grafana.app/updatedTimestamp": "2026-08-08T21:52:14Z"
     }
   },
   "spec": {
@@ -186,7 +186,7 @@
                         ],
                         "limit": 100,
                         "metricsQueryType": "range",
-                        "query": "{\r\n  resource.service.name = \"radio-registry\"\r\n  && name != \"task outboxEventPublisher.publishOutboxEvents\"\r\n}\r\n||\r\n{\r\n  resource.service.name = \"radio-analytics\"\r\n}",
+                        "query": "{\r\n  resource.service.name = \"radio-registry\"\r\n  && name != \"task outboxEventPublisher.publishOutboxEvents\"\r\n}\r\n||\r\n{\r\n  resource.service.name = \"radio-analytics\"\r\n}\r\nwith (most_recent=true)",
                         "queryType": "traceql",
                         "serviceMapUseNativeHistograms": false,
                         "spss": 50,
@@ -703,7 +703,7 @@
     "tags": [],
     "timeSettings": {
       "timezone": "browser",
-      "from": "now-30d",
+      "from": "now-7d",
       "to": "now",
       "autoRefresh": "",
       "autoRefreshIntervals": [
@@ -719,6 +719,7 @@
         "1d"
       ],
       "hideTimepicker": false,
+      "weekStart": "monday",
       "fiscalYearStartMonth": 0
     },
     "title": "Radio Ecosystem — Operations",
