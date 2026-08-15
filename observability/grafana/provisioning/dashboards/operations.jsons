@@ -5,8 +5,8 @@
     "name": "ad9wm9g",
     "namespace": "default",
     "uid": "8d0e4f36-666b-4e8b-8376-eb4b71195e1b",
-    "resourceVersion": "1786750147278003",
-    "generation": 28,
+    "resourceVersion": "1786751846481017",
+    "generation": 29,
     "creationTimestamp": "2026-08-06T18:43:04Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "269884748423168"
@@ -16,7 +16,7 @@
       "grafana.app/folder": "",
       "grafana.app/saved-from-ui": "Grafana v13.1.1 (e784b7782a)",
       "grafana.app/updatedBy": "user:aftzdd1pbkt8gb",
-      "grafana.app/updatedTimestamp": "2026-08-14T23:29:07Z"
+      "grafana.app/updatedTimestamp": "2026-08-14T23:57:26Z"
     }
   },
   "spec": {
@@ -507,7 +507,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "topk(\r\n  20,\r\n  round(\r\n    sum by (topic) (\r\n      increase(\r\n        kafka_consumer_fetch_manager_records_consumed_total{\r\n          application=\"radio-analytics\"\r\n        }[$__range]\r\n      )\r\n    )\r\n  )\r\n)",
+                        "expr": "topk(\r\n  20,\r\n  round(\r\n    sum by (topic) (\r\n      increase(\r\n        kafka_consumer_fetch_manager_records_consumed_total{\r\n          application=\"radio-analytics\",\r\n          topic!=\"\"\r\n        }[$__range]\r\n      )\r\n    )\r\n  )\r\n)",
                         "format": "time_series",
                         "instant": true,
                         "legendFormat": "__auto",
