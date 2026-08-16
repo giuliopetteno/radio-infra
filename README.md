@@ -43,13 +43,13 @@ This repo supports three distinct Compose configurations:
 
 ## Technology Stack
 
-- Containerization with Docker & Docker Compose
-- Apache Kafka for event-driven communication
+- Containerization with Docker and Docker Compose
+- Automated CI/CD with GitHub Actions
 - Amazon Web Services (AWS) deployment:
   - EC2 (Docker Compose orchestration, IAM-only access via SSM)
   - ECR for container image registry
   - RDS (PostgreSQL, private subnet, EC2-scoped security group, SSM tunnel for local dev)
-  - Automated CI/CD: GitHub Actions (cross-repo triggering) → OIDC → ECR → SSM Run Command deploy
+  - GitHub Actions → OIDC → ECR → SSM Run Command deploy
   - IAM: least-privilege roles throughout (GitHub Actions OIDC roles, EC2 instance role)
   - Secrets management via AWS Systems Manager Parameter Store
   - Nginx reverse proxy for name-based routing, with TLS via Let's Encrypt and automated renewal
