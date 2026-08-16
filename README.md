@@ -46,16 +46,17 @@ This repo supports three distinct Compose configurations:
 - Containerization with Docker & Docker Compose
 - Apache Kafka for event-driven communication
 - Amazon Web Services (AWS) deployment:
-	- EC2 (Docker Compose orchestration, IAM-only access via SSM)
-	- ECR for container image registry
-	- Automated CI/CD: GitHub Actions (cross-repo triggering) → OIDC → ECR → SSM Run Command deploy
-	- IAM: least-privilege roles throughout (GitHub Actions OIDC roles, EC2 instance role)
-	- Secrets management via AWS Systems Manager Parameter Store
-    - Nginx reverse proxy for name-based routing, with TLS via Let's Encrypt and automated renewal
-	- DNS-based service routing under a custom domain (`giuliopetteno.dev`) via Route 53 with Elastic IP
+  - EC2 (Docker Compose orchestration, IAM-only access via SSM)
+  - ECR for container image registry
+  - RDS (PostgreSQL, private subnet, EC2-scoped security group, SSM tunnel for local dev)
+  - Automated CI/CD: GitHub Actions (cross-repo triggering) → OIDC → ECR → SSM Run Command deploy
+  - IAM: least-privilege roles throughout (GitHub Actions OIDC roles, EC2 instance role)
+  - Secrets management via AWS Systems Manager Parameter Store
+  - Nginx reverse proxy for name-based routing, with TLS via Let's Encrypt and automated renewal
+  - DNS-based service routing under a custom domain (`giuliopetteno.dev`) via Route 53 with Elastic IP
 - Observability stack:
-	- Alloy as unified OpenTelemetry (OTLP) collector
-	- Prometheus for metrics storage
-	- Tempo for distributed trace storage
-	- Loki for log aggregation
-	- Grafana for dashboards, visualization, and trace-to-log correlation
+  - Alloy as unified OpenTelemetry (OTLP) collector
+  - Prometheus for metrics storage
+  - Tempo for distributed trace storage
+  - Loki for log aggregation
+  - Grafana for dashboards, visualization, and trace-to-log correlation
