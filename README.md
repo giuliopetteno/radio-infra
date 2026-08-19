@@ -14,7 +14,11 @@ Microservices application traces, metrics, and logs are collected by **Alloy** a
 ## Live Demo
 
 Grafana dashboards are available at:
-[radio-analytics.giuliopetteno.dev](https://giuliopetteno.s.gy/radio-analytics) *(short link for click tracking)*
+[`radio-analytics.giuliopetteno.dev`](https://giuliopetteno.s.gy/radio-analytics) *(short link for click tracking)*
+
+- [`Radio Analytics - Insights`](https://radio-analytics.giuliopetteno.dev/d/adc7w8k/insights) → Business analytics for medical devices, including inventory, allocation, lifecycle, organizational structure, and activity trends, available both in real time and as scheduled, persisted reports.
+- [`Radio Analytics - Performance`](https://radio-analytics.giuliopetteno.dev/d/adflz27/performance) → Analytics engine execution monitoring, including outcomes, execution times, KPI status and performance, across both real-time and scheduled report executions.
+- [`Radio Ecosystem - Operations`](https://radio-analytics.giuliopetteno.dev/d/ad9wm9g/operations) → End-to-end observability of the entire ecosystem, including service dependencies, HTTP and Kafka traffic, logs, and distributed traces.
 
 > **Note:** Anonymous read-only access — no login required.
 

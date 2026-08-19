@@ -5,18 +5,20 @@
     "name": "ad9wm9g",
     "namespace": "default",
     "uid": "8d0e4f36-666b-4e8b-8376-eb4b71195e1b",
-    "resourceVersion": "1787069834823019",
-    "generation": 35,
+    "resourceVersion": "1787167617075987",
+    "generation": 47,
     "creationTimestamp": "2026-08-06T18:43:04Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "269884748423168"
     },
     "annotations": {
       "grafana.app/createdBy": "user:aftzdd1pbkt8gb",
-      "grafana.app/folder": "",
+      "grafana.app/folder": "efvo0ug82bhmoa",
       "grafana.app/saved-from-ui": "Grafana v13.1.1 (e784b7782a)",
       "grafana.app/updatedBy": "user:aftzdd1pbkt8gb",
-      "grafana.app/updatedTimestamp": "2026-08-18T16:17:14Z"
+      "grafana.app/updatedTimestamp": "2026-08-19T19:26:57Z",
+      "grafana.app/folderTitle": "radio",
+      "grafana.app/folderUrl": "/dashboards/f/efvo0ug82bhmoa/radio"
     }
   },
   "spec": {
@@ -124,14 +126,6 @@
                       {
                         "value": 0,
                         "color": "light-blue"
-                      },
-                      {
-                        "value": 60,
-                        "color": "semi-dark-orange"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
                       }
                     ]
                   },
@@ -429,7 +423,7 @@
         "kind": "Panel",
         "spec": {
           "id": 4,
-          "title": "Service Graph",
+          "title": "",
           "description": "",
           "links": [],
           "data": {
@@ -568,14 +562,6 @@
                       {
                         "value": 0,
                         "color": "light-blue"
-                      },
-                      {
-                        "value": 60,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
                       }
                     ]
                   },
@@ -597,8 +583,9 @@
           {
             "kind": "RowsLayoutRow",
             "spec": {
-              "title": "Overview",
+              "title": "Service Graph",
               "collapse": false,
+              "hideHeader": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -609,7 +596,7 @@
                         "x": 2,
                         "y": 0,
                         "width": 19,
-                        "height": 9,
+                        "height": 10,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-4"
@@ -635,7 +622,7 @@
                       "spec": {
                         "x": 0,
                         "y": 0,
-                        "width": 15,
+                        "width": 12,
                         "height": 8,
                         "element": {
                           "kind": "ElementReference",
@@ -646,9 +633,9 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 15,
+                        "x": 12,
                         "y": 0,
-                        "width": 9,
+                        "width": 12,
                         "height": 8,
                         "element": {
                           "kind": "ElementReference",
@@ -729,7 +716,7 @@
       "weekStart": "monday",
       "fiscalYearStartMonth": 0
     },
-    "title": "Radio Ecosystem — Operations",
+    "title": "operations",
     "variables": [],
     "preferences": {
       "layout": {
