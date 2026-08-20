@@ -5,8 +5,8 @@
     "name": "adc7w8k",
     "namespace": "default",
     "uid": "e7dea855-e34c-4fdb-b5db-37c18eb6282c",
-    "resourceVersion": "1787167152256983",
-    "generation": 117,
+    "resourceVersion": "1787184453358997",
+    "generation": 134,
     "creationTimestamp": "2026-08-18T17:10:54Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "91743060430848"
@@ -16,7 +16,7 @@
       "grafana.app/folder": "bfvo0yimn2n0gb",
       "grafana.app/saved-from-ui": "Grafana v13.1.1 (e784b7782a)",
       "grafana.app/updatedBy": "user:aftzdd1pbkt8gb",
-      "grafana.app/updatedTimestamp": "2026-08-19T19:19:12Z",
+      "grafana.app/updatedTimestamp": "2026-08-20T00:07:33Z",
       "grafana.app/folderTitle": "radio-analytics",
       "grafana.app/folderUrl": "/dashboards/f/bfvo0yimn2n0gb/radio-analytics"
     }
@@ -68,7 +68,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -105,7 +105,9 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": false,
+                        "status": true,
                         "time": true
                       },
                       "includeByName": {},
@@ -163,22 +165,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "active"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "green",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "out-of-service"
+                      "options": "Out of Service"
                     },
                     "properties": [
                       {
@@ -193,13 +180,13 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "pending-installation"
+                      "options": "Deleted"
                     },
                     "properties": [
                       {
                         "id": "color",
                         "value": {
-                          "fixedColor": "blue",
+                          "fixedColor": "#ffffff",
                           "mode": "fixed"
                         }
                       }
@@ -208,22 +195,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "under-maintenance"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "purple",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "decommissioned"
+                      "options": "Decommissioned"
                     },
                     "properties": [
                       {
@@ -238,7 +210,7 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "pending-decommissioning"
+                      "options": "Pending Decommissioning"
                     },
                     "properties": [
                       {
@@ -251,25 +223,16 @@
                     ]
                   },
                   {
-                    "__systemRef": "hideSeriesFrom",
                     "matcher": {
-                      "id": "byNames",
-                      "options": {
-                        "mode": "exclude",
-                        "names": [
-                          "value"
-                        ],
-                        "prefix": "All except:",
-                        "readOnly": true
-                      }
+                      "id": "byName",
+                      "options": "Pending Installation"
                     },
                     "properties": [
                       {
-                        "id": "custom.hideFrom",
+                        "id": "color",
                         "value": {
-                          "legend": false,
-                          "tooltip": true,
-                          "viz": true
+                          "fixedColor": "blue",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -277,13 +240,13 @@
                   {
                     "matcher": {
                       "id": "byName",
-                      "options": "deleted"
+                      "options": "Under Maintenance"
                     },
                     "properties": [
                       {
                         "id": "color",
                         "value": {
-                          "fixedColor": "#ffffff",
+                          "fixedColor": "purple",
                           "mode": "fixed"
                         }
                       }
@@ -293,163 +256,6 @@
               }
             }
           }
-        }
-      },
-      "panel-10": {
-        "kind": "Panel",
-        "spec": {
-          "id": 10,
-          "title": "",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "yesoreyeram-infinity-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "ffvklux9t6bcwe"
-                      },
-                      "spec": {
-                        "columns": [
-                          {
-                            "selector": "dataset",
-                            "text": "dataset",
-                            "type": "string"
-                          },
-                          {
-                            "selector": "label",
-                            "text": "label",
-                            "type": "string"
-                          },
-                          {
-                            "selector": "value",
-                            "text": "value",
-                            "type": "number"
-                          },
-                          {
-                            "selector": "time",
-                            "text": "time",
-                            "type": "string"
-                          },
-                          {
-                            "selector": "text",
-                            "text": "text",
-                            "type": "string"
-                          }
-                        ],
-                        "filters": [],
-                        "format": "table",
-                        "global_query_id": "",
-                        "parser": "backend",
-                        "root_selector": "(\n  $root := $;\n  $k := $root.kpiResults;\n\n  $meta := [\n    {\n      \"dataset\": \"meta\",\n      \"label\": \"Generated At\",\n      \"text\": $substring($root.generatedAt, 5, 2) & \"/\" &\n              $substring($root.generatedAt, 8, 2) & \"/\" &\n              $substring($root.generatedAt, 0, 4) & \" \" &\n              $substring($root.generatedAt, 11, 8)\n    },\n    {\n      \"dataset\": \"meta\",\n      \"label\": \"Execution Status\",\n      \"text\": $root.executionStatus\n    }\n  ];\n\n  $base := [\n    {\n      \"dataset\": \"device_scalar\",\n      \"label\": \"total\",\n      \"value\": $k.deviceSummary.result.total\n    },\n    {\n      \"dataset\": \"device_scalar\",\n      \"label\": \"avg_age\",\n      \"value\": $k.averageDeviceAge.result\n    },\n\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"active\",\n      \"value\": $k.deviceSummary.result.active\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"out-of-service\",\n      \"value\": $k.deviceSummary.result.outOfService\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"decommissioned\",\n      \"value\": $k.deviceSummary.result.decommissioned\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"pending-decommissioning\",\n      \"value\": $k.deviceSummary.result.pendingDecommissioning\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"pending-installation\",\n      \"value\": $k.deviceSummary.result.pendingInstallation\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"under-maintenance\",\n      \"value\": $k.deviceSummary.result.underMaintenance\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"deleted\",\n      \"value\": $k.deviceSummary.result.deleted\n    }\n  ];\n\n  $types := $map(\n    $k.devicesByType.result,\n    function($v) {\n      {\n        \"dataset\": \"device_type\",\n        \"label\": $v.deviceTypeName,\n        \"value\": $v.total\n      }\n    }\n  );\n\n  $organizations := $map(\n    $k.devicesByOrganization.result,\n    function($v) {\n      {\n        \"dataset\": \"organization\",\n        \"label\": $v.organizationName,\n        \"value\": $v.total\n      }\n    }\n  );\n\n  $departments := $map(\n    $k.devicesByDepartment.result,\n    function($v) {\n      {\n        \"dataset\": \"department\",\n        \"label\": $v.departmentName,\n        \"value\": $v.total\n      }\n    }\n  );\n\n  $organizationSummary := [\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"total\",\n      \"value\": $k.organizationSummary.result.total\n    },\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"with_devices\",\n      \"value\": $k.organizationSummary.result.withDevices\n    },\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"without_devices\",\n      \"value\": $k.organizationSummary.result.withoutDevices\n    },\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"deleted\",\n      \"value\": $k.organizationSummary.result.deleted\n    }\n  ];\n\n  $departmentSummary := [\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"total\",\n      \"value\": $k.departmentSummary.result.total\n    },\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"with_devices\",\n      \"value\": $k.departmentSummary.result.withDevices\n    },\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"without_devices\",\n      \"value\": $k.departmentSummary.result.withoutDevices\n    },\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"deleted\",\n      \"value\": $k.departmentSummary.result.deleted\n    }\n  ];\n\n  $deviceTypeSummary := [\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"total\",\n      \"value\": $k.deviceTypeSummary.result.total\n    },\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"with_devices\",\n      \"value\": $k.deviceTypeSummary.result.withDevices\n    },\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"without_devices\",\n      \"value\": $k.deviceTypeSummary.result.withoutDevices\n    },\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"deleted\",\n      \"value\": $k.deviceTypeSummary.result.deleted\n    }\n  ];\n\n  $installations := $map(\n    $k.devicesInstallationTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"installation_trend\",\n        \"label\": \"installations\",\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $decommissioning := $map(\n    $k.devicesDecommissioningTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"decommissioning_trend\",\n        \"label\": \"decommissioning\",\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $deviceEvents := $map(\n    $k.deviceEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"device_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $organizationEvents := $map(\n    $k.organizationEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"organization_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $departmentEvents := $map(\n    $k.departmentEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"department_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $deviceTypeEvents := $map(\n    $k.deviceTypeEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"device_type_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $append(\n    $append(\n      $append(\n        $append(\n          $append(\n            $append(\n              $append(\n                $append(\n                  $append(\n                    $append(\n                      $append(\n                        $append(\n                          $meta,\n                          $base\n                        ),\n                        $types\n                      ),\n                      $organizations\n                    ),\n                    $departments\n                  ),\n                  $organizationSummary\n                ),\n                $departmentSummary\n              ),\n              $deviceTypeSummary\n            ),\n            $installations\n          ),\n          $decommissioning\n        ),\n        $deviceEvents\n      ),\n      $organizationEvents\n    ),\n    $append(\n      $departmentEvents,\n      $deviceTypeEvents\n    )\n  )\n)",
-                        "source": "url",
-                        "type": "json",
-                        "url": "http://radio-analytics:8081/api/v1/analytics/${mode}",
-                        "url_options": {
-                          "data": "",
-                          "method": "GET"
-                        }
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [
-                {
-                  "kind": "Transformation",
-                  "group": "filterByValue",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "equal",
-                            "options": {
-                              "value": "meta"
-                            }
-                          },
-                          "fieldName": "dataset"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "include"
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "organize",
-                  "spec": {
-                    "options": {
-                      "excludeByName": {
-                        "dataset": true,
-                        "text": false,
-                        "time": true,
-                        "value": true
-                      },
-                      "includeByName": {},
-                      "indexByName": {},
-                      "renameByName": {
-                        "label": "Property",
-                        "text": "Value"
-                      }
-                    }
-                  }
-                }
-              ],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "table",
-            "version": "13.1.1",
-            "spec": {
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": false
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "light-blue"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "json-view"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false,
-                    "wrapHeaderText": false,
-                    "wrapText": false
-                  }
-                },
-                "overrides": []
-              }
-            }
-          },
-          "transparent": true
         }
       },
       "panel-11": {
@@ -474,7 +280,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -511,7 +317,9 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": true,
+                        "status": true,
                         "time": false
                       },
                       "includeByName": {},
@@ -642,7 +450,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -688,7 +496,9 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": true,
+                        "status": true,
                         "time": true
                       },
                       "includeByName": {},
@@ -767,7 +577,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -822,7 +632,9 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": false,
+                        "status": true,
                         "text": true,
                         "time": true
                       },
@@ -973,7 +785,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -1028,9 +840,12 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": false,
+                        "status": true,
                         "text": true,
-                        "time": true
+                        "time": true,
+                        "value": false
                       },
                       "includeByName": {},
                       "indexByName": {},
@@ -1179,7 +994,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -1216,6 +1031,8 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
+                        "status": true,
                         "text": true
                       },
                       "includeByName": {},
@@ -1409,7 +1226,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -1446,6 +1263,8 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
+                        "status": true,
                         "text": true
                       },
                       "includeByName": {},
@@ -1639,7 +1458,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -1676,6 +1495,8 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
+                        "status": true,
                         "text": true
                       },
                       "includeByName": {},
@@ -1869,7 +1690,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -1906,6 +1727,8 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
+                        "status": true,
                         "text": true
                       },
                       "includeByName": {},
@@ -2077,6 +1900,167 @@
           }
         }
       },
+      "panel-19": {
+        "kind": "Panel",
+        "spec": {
+          "id": 19,
+          "title": "Snapshot",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "yesoreyeram-infinity-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "ffvklux9t6bcwe"
+                      },
+                      "spec": {
+                        "columns": [
+                          {
+                            "selector": "dataset",
+                            "text": "dataset",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "label",
+                            "text": "label",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "value",
+                            "text": "value",
+                            "type": "number"
+                          },
+                          {
+                            "selector": "time",
+                            "text": "time",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "status",
+                            "text": "status",
+                            "type": "string"
+                          },
+                          {
+                            "selector": "generatedAt",
+                            "text": "generatedAt",
+                            "type": "timestamp"
+                          }
+                        ],
+                        "filters": [],
+                        "format": "table",
+                        "global_query_id": "",
+                        "parser": "backend",
+                        "root_selector": "(\n  $root := $;\n  $k := $root.kpiResults;\n\n$meta := [\n{\n  \"dataset\": \"meta\",\n  \"generatedAt\": $root.generatedAt,\n  \"status\": $root.executionStatus\n}\n];\n  $base := [\n    {\n      \"dataset\": \"device_scalar\",\n      \"label\": \"total\",\n      \"value\": $k.deviceSummary.result.total\n    },\n    {\n      \"dataset\": \"device_scalar\",\n      \"label\": \"avg_age\",\n      \"value\": $k.averageDeviceAge.result\n    },\n\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"Active\",\n      \"value\": $k.deviceSummary.result.active\n    },\n\t{\n      \"dataset\": \"device_status\",\n      \"label\": \"Pending Installation\",\n      \"value\": $k.deviceSummary.result.pendingInstallation\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"Under Maintenance\",\n      \"value\": $k.deviceSummary.result.underMaintenance\n    },\n\t    {\n      \"dataset\": \"device_status\",\n      \"label\": \"Out of Service\",\n      \"value\": $k.deviceSummary.result.outOfService\n    },\n\t{\n      \"dataset\": \"device_status\",\n      \"label\": \"Pending Decommissioning\",\n      \"value\": $k.deviceSummary.result.pendingDecommissioning\n    },\n\t{\n      \"dataset\": \"device_status\",\n      \"label\": \"Decommissioned\",\n      \"value\": $k.deviceSummary.result.decommissioned\n    },\n    {\n      \"dataset\": \"device_status\",\n      \"label\": \"Deleted\",\n      \"value\": $k.deviceSummary.result.deleted\n    }\n  ];\n\n  $types := $map(\n    $k.devicesByType.result,\n    function($v) {\n      {\n        \"dataset\": \"device_type\",\n        \"label\": $v.deviceTypeName,\n        \"value\": $v.total\n      }\n    }\n  );\n\n  $organizations := $map(\n    $k.devicesByOrganization.result,\n    function($v) {\n      {\n        \"dataset\": \"organization\",\n        \"label\": $v.organizationName,\n        \"value\": $v.total\n      }\n    }\n  );\n\n  $departments := $map(\n    $k.devicesByDepartment.result,\n    function($v) {\n      {\n        \"dataset\": \"department\",\n        \"label\": $v.departmentName,\n        \"value\": $v.total\n      }\n    }\n  );\n\n  $organizationSummary := [\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"total\",\n      \"value\": $k.organizationSummary.result.total\n    },\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"with_devices\",\n      \"value\": $k.organizationSummary.result.withDevices\n    },\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"without_devices\",\n      \"value\": $k.organizationSummary.result.withoutDevices\n    },\n    {\n      \"dataset\": \"organization_summary\",\n      \"label\": \"deleted\",\n      \"value\": $k.organizationSummary.result.deleted\n    }\n  ];\n\n  $departmentSummary := [\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"total\",\n      \"value\": $k.departmentSummary.result.total\n    },\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"with_devices\",\n      \"value\": $k.departmentSummary.result.withDevices\n    },\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"without_devices\",\n      \"value\": $k.departmentSummary.result.withoutDevices\n    },\n    {\n      \"dataset\": \"department_summary\",\n      \"label\": \"deleted\",\n      \"value\": $k.departmentSummary.result.deleted\n    }\n  ];\n\n  $deviceTypeSummary := [\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"total\",\n      \"value\": $k.deviceTypeSummary.result.total\n    },\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"with_devices\",\n      \"value\": $k.deviceTypeSummary.result.withDevices\n    },\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"without_devices\",\n      \"value\": $k.deviceTypeSummary.result.withoutDevices\n    },\n    {\n      \"dataset\": \"device_type_summary\",\n      \"label\": \"deleted\",\n      \"value\": $k.deviceTypeSummary.result.deleted\n    }\n  ];\n\n  $installations := $map(\n    $k.devicesInstallationTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"installation_trend\",\n        \"label\": \"installations\",\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $decommissioning := $map(\n    $k.devicesDecommissioningTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"decommissioning_trend\",\n        \"label\": \"decommissioning\",\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $deviceEvents := $map(\n    $k.deviceEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"device_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $organizationEvents := $map(\n    $k.organizationEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"organization_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $departmentEvents := $map(\n    $k.departmentEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"department_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $deviceTypeEvents := $map(\n    $k.deviceTypeEventsTrend.result,\n    function($v) {\n      {\n        \"dataset\": \"device_type_events_trend\",\n        \"label\": $v.eventType,\n        \"value\": $v.total,\n        \"time\":\n          $string($v.year) & \"-\" &\n          ($v.month < 10\n            ? \"0\" & $string($v.month)\n            : $string($v.month)\n          ) &\n          \"-01\"\n      }\n    }\n  );\n\n  $append(\n    $append(\n      $append(\n        $append(\n          $append(\n            $append(\n              $append(\n                $append(\n                  $append(\n                    $append(\n                      $append(\n                        $append(\n                          $meta,\n                          $base\n                        ),\n                        $types\n                      ),\n                      $organizations\n                    ),\n                    $departments\n                  ),\n                  $organizationSummary\n                ),\n                $departmentSummary\n              ),\n              $deviceTypeSummary\n            ),\n            $installations\n          ),\n          $decommissioning\n        ),\n        $deviceEvents\n      ),\n      $organizationEvents\n    ),\n    $append(\n      $departmentEvents,\n      $deviceTypeEvents\n    )\n  )\n)",
+                        "source": "url",
+                        "type": "json",
+                        "url": "http://radio-analytics:8081/api/v1/analytics/${mode}",
+                        "url_options": {
+                          "data": "",
+                          "method": "GET"
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [
+                {
+                  "kind": "Transformation",
+                  "group": "filterByValue",
+                  "spec": {
+                    "options": {
+                      "filters": [
+                        {
+                          "config": {
+                            "id": "equal",
+                            "options": {
+                              "value": "meta"
+                            }
+                          },
+                          "fieldName": "dataset"
+                        }
+                      ],
+                      "match": "all",
+                      "type": "include"
+                    }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "organize",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "dataset": true,
+                        "label": true,
+                        "status": false,
+                        "time": true,
+                        "value": true
+                      },
+                      "includeByName": {},
+                      "indexByName": {},
+                      "renameByName": {
+                        "generatedAt": "Generated At",
+                        "status": "Status"
+                      }
+                    }
+                  }
+                }
+              ],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "table",
+            "version": "13.1.1",
+            "spec": {
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "semi-dark-blue"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "json-view"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  }
+                },
+                "overrides": []
+              }
+            }
+          },
+          "transparent": true
+        }
+      },
       "panel-2": {
         "kind": "Panel",
         "spec": {
@@ -2100,7 +2084,7 @@
                       },
                       "spec": {
                         "adHocFiltersEnabled": false,
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -2146,7 +2130,9 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": true,
+                        "status": true,
                         "time": true
                       },
                       "includeByName": {},
@@ -2224,7 +2210,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -2261,7 +2247,9 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": true,
+                        "status": true,
                         "time": false
                       },
                       "includeByName": {},
@@ -2392,7 +2380,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -2429,6 +2417,8 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
+                        "status": true,
                         "time": true
                       },
                       "includeByName": {},
@@ -2570,7 +2560,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -2607,6 +2597,8 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
+                        "status": true,
                         "time": true
                       },
                       "includeByName": {},
@@ -2735,7 +2727,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -2790,7 +2782,9 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
                         "label": false,
+                        "status": true,
                         "text": true,
                         "time": true
                       },
@@ -2971,7 +2965,7 @@
                         "name": "-- Dashboard --"
                       },
                       "spec": {
-                        "panelId": 10
+                        "panelId": 19
                       }
                     },
                     "refId": "A",
@@ -3008,6 +3002,8 @@
                     "options": {
                       "excludeByName": {
                         "dataset": true,
+                        "generatedAt": true,
+                        "status": true,
                         "time": true
                       },
                       "includeByName": {},
@@ -3154,11 +3150,11 @@
                       "spec": {
                         "x": 0,
                         "y": 0,
-                        "width": 7,
-                        "height": 3,
+                        "width": 6,
+                        "height": 4,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-10"
+                          "name": "panel-19"
                         }
                       }
                     }
