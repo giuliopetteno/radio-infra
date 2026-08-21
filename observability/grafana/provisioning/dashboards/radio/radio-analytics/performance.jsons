@@ -5,8 +5,8 @@
     "name": "adflz27",
     "namespace": "default",
     "uid": "69d29b99-9122-41ef-a32f-be3a49f65a28",
-    "resourceVersion": "1787166766278992",
-    "generation": 76,
+    "resourceVersion": "1787317325876994",
+    "generation": 82,
     "creationTimestamp": "2026-08-18T16:30:01Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "81453897646080"
@@ -16,7 +16,7 @@
       "grafana.app/folder": "bfvo0yimn2n0gb",
       "grafana.app/saved-from-ui": "Grafana v13.1.1 (e784b7782a)",
       "grafana.app/updatedBy": "user:aftzdd1pbkt8gb",
-      "grafana.app/updatedTimestamp": "2026-08-19T19:12:46Z",
+      "grafana.app/updatedTimestamp": "2026-08-21T13:02:05Z",
       "grafana.app/folderTitle": "radio-analytics",
       "grafana.app/folderUrl": "/dashboards/f/bfvo0yimn2n0gb/radio-analytics"
     }
@@ -911,7 +911,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sum(\r\n  analytics_execution_duration_milliseconds_sum{mode=\"$mode\"}\r\n)\r\n/\r\nsum(\r\n  analytics_execution_duration_milliseconds_count{mode=\"$mode\"}\r\n)",
+                        "expr": "sum(\r\n  increase(\r\n    analytics_execution_duration_milliseconds_sum{mode=\"$mode\"}[$__range]\r\n  )\r\n)\r\n/\r\nsum(\r\n  increase(\r\n    analytics_execution_duration_milliseconds_count{mode=\"$mode\"}[$__range]\r\n  )\r\n)",
                         "instant": true,
                         "legendFormat": "__auto",
                         "range": false
@@ -996,7 +996,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sort_desc(\r\n  sum by (kpi) (\r\n    analytics_kpi_duration_milliseconds_sum{\r\n      mode=\"$mode\"\r\n    }\r\n  )\r\n  /\r\n  sum by (kpi) (\r\n    analytics_kpi_duration_milliseconds_count{\r\n      mode=\"$mode\"\r\n    }\r\n  )\r\n)",
+                        "expr": "sort_desc(\r\n  sum by (kpi) (\r\n    increase(\r\n      analytics_kpi_duration_milliseconds_sum{mode=\"$mode\"}[$__range]\r\n    )\r\n  )\r\n  /\r\n  sum by (kpi) (\r\n    increase(\r\n      analytics_kpi_duration_milliseconds_count{mode=\"$mode\"}[$__range]\r\n    )\r\n  )\r\n)",
                         "instant": true,
                         "legendFormat": "{{kpi}}",
                         "range": false
@@ -1507,7 +1507,7 @@
     "tags": [],
     "timeSettings": {
       "timezone": "browser",
-      "from": "now-6h",
+      "from": "now-7d",
       "to": "now",
       "autoRefresh": "",
       "autoRefreshIntervals": [
