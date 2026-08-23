@@ -31,6 +31,73 @@ Grafana dashboards are available at:
 
 ## Architecture
 
+```mermaid
+flowchart LR
+  Client([Client])
+
+  subgraph aws["AWS"]
+    subgraph ec2["AWS EC2"]
+      Nginx[nginx]
+
+      subgraph compose["Docker Compose · radio-infra"]
+        subgraph network["Docker network · radio-net"]
+          Registry[radio-registry]
+          Analytics[radio-analytics]
+          Kafka[Apache Kafka]
+          Alloy[Alloy]
+          Prometheus[Prometheus]
+          Tempo[Tempo]
+          Loki[Loki]
+          Grafana[Grafana]
+        end
+      end
+    end
+
+    RDS["AWS RDS · PostgreSQL"]
+  end
+
+  Client --> Nginx
+  Nginx --> Registry
+  Nginx --> Grafana
+
+  Registry -- radio_registry schema --> RDS
+  Analytics -- radio_analytics schema --> RDS
+
+  Registry --> Kafka
+  Kafka --> Analytics
+
+  Grafana --> Analytics
+
+  Registry -. OTLP .-> Alloy
+  Analytics -. OTLP .-> Alloy
+  Alloy -. metrics .-> Prometheus
+  Alloy -. logs .-> Loki
+  Alloy -. traces .-> Tempo
+
+  Grafana --> Prometheus
+  Grafana --> Loki
+  Grafana --> Tempo
+
+  style aws fill:#fff,stroke:#d0d7de
+  style ec2 fill:#fff,stroke:#ed7100,stroke-width:2px
+  style compose fill:#f6f8fa,stroke:#d0d7de
+  style network fill:#fff,stroke:#d0d7de,stroke-dasharray:5 5
+
+  classDef app fill:#f6f8fa,stroke:#d0d7de,color:#24292f
+  classDef proxy fill:#e8467c,stroke:#e8467c,color:#0d1117
+  classDef broker fill:#79c0ff,stroke:#79c0ff,color:#0d1117
+  classDef metrics fill:#e6522c,stroke:#e6522c,color:#fff
+  classDef grafana fill:#f9a825,stroke:#f9a825,color:#0d1117
+  classDef awsService fill:#ed7100,stroke:#ed7100,color:#fff
+
+  class Registry,Analytics,Client app
+  class Nginx proxy
+  class Kafka broker
+  class Prometheus metrics
+  class Alloy,Tempo,Loki,Grafana grafana
+  class RDS awsService
+```
+
 - `radio-registry` — producer service (medical devices management system)
 - `radio-analytics` — consumer service (medical devices analytics system)
 - Services communicate exclusively via **Apache Kafka**; they share no code and are versioned in separate repositories
@@ -44,6 +111,62 @@ This repo supports three distinct Compose configurations:
 - **`docker-compose.yml`** — local development. Uses Compose `include` to pull in each service's own compose file from sibling directories, building images from local source
 - **`docker-compose.prod.yml`** — production-like local environment. Uses Compose `include` to pull in each service's own `.prod` compose file from sibling directories, building images from local source
 - **`docker-compose.aws.yml`** — cloud production. Self-contained (no dependency on sibling repos being cloned), pulls pre-built images directly from Amazon ECR, and is the configuration deployed to EC2
+
+## CI/CD Pipeline
+
+```mermaid
+flowchart LR
+  subgraph github["GitHub"]
+    subgraph repos["Repositories"]
+      RegistryRepo[radio-registry]
+      AnalyticsRepo[radio-analytics]
+      InfraRepo[radio-infra]
+    end
+
+    subgraph ci["CI · GitHub Actions"]
+      Build[Build and test]
+      Image[Build container image]
+    end
+
+    subgraph cd["CD · GitHub Actions"]
+      Deploy[SSM Run Command]
+    end
+  end
+
+  subgraph aws["AWS"]
+    ECR[AWS ECR]
+
+    subgraph ec2["AWS EC2"]
+      Compose[Docker Compose<br/>radio-infra]
+    end
+  end
+
+  RegistryRepo -- push --> Build
+  AnalyticsRepo -- push --> Build
+
+  Build --> Image
+  Image -- docker push · OIDC --> ECR
+  Image -- repository_dispatch --> InfraRepo
+
+  InfraRepo --> Deploy
+  Deploy -- OIDC --> Compose
+  Compose -- docker pull --> ECR
+
+  style github fill:#fff,stroke:#d0d7de
+  style repos fill:#fff,stroke:#d0d7de
+  style ci fill:#fff,stroke:#d0d7de
+  style cd fill:#fff,stroke:#d0d7de
+  style aws fill:#fff,stroke:#d0d7de
+  style ec2 fill:#fff,stroke:#d0d7de
+
+  classDef repo fill:#f6f8fa,stroke:#d0d7de,color:#24292f
+  classDef pipeline fill:#a371f7,stroke:#a371f7,color:#0d1117
+  classDef awsService fill:#ed7100,stroke:#ed7100,color:#fff
+
+  class RegistryRepo,AnalyticsRepo,InfraRepo repo
+  class Build,Image,Deploy pipeline
+  class ECR,Compose awsService
+```
 
 ## Technology Stack
 
