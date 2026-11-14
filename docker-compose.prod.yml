@@ -11,6 +11,17 @@ networks:
     driver: bridge
 
 services:
+  radio-db:
+    image: postgres:18
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=radio
+      - POSTGRES_USER=${POSTGRES_ADMIN_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_ADMIN_PASSWORD}
+    volumes:
+      - radio-db-data:/var/lib/postgresql
+    networks:
+      - radio-net
   radio-registry:
     ports:
       - "8443:8443"
@@ -114,6 +125,7 @@ services:
       - radio-net
 
 volumes:
+  radio-db-data:
   kafka-data:
     name: radio-kafka-data
   alloy-data:

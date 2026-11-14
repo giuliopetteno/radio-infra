@@ -25,6 +25,8 @@ fetch_param() {
 }
 
 fetch_param "/radio/prod/shared/DB_URL" "DB_URL"
+fetch_param "/radio/prod/shared/POSTGRES_ADMIN_USER" "POSTGRES_ADMIN_USER"
+fetch_param "/radio/prod/shared/POSTGRES_ADMIN_PASSWORD" "POSTGRES_ADMIN_PASSWORD"
 fetch_param "/radio/prod/shared/DB_USERNAME" "DB_USERNAME"
 fetch_param "/radio/prod/shared/DB_PASSWORD" "DB_PASSWORD"
 fetch_param "/radio/prod/shared/GRAFANA_ADMIN_PASSWORD" "GRAFANA_ADMIN_PASSWORD"
