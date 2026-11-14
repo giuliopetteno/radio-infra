@@ -5,6 +5,17 @@ networks:
     driver: bridge
 
 services:
+  nginx:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - nginx-acme-data:/var/cache/nginx/acme
+    networks:
+      - radio-net
   radio-registry:
     image: ${CONTAINER_REGISTRY_REPO}/radio-registry:latest
     container_name: radio-registry
@@ -165,3 +176,4 @@ volumes:
   tempo-data:
   loki-data:
   grafana-data:
+  nginx-acme-data:
