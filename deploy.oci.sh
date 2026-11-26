@@ -24,7 +24,7 @@ sudo -H -u ubuntu /home/ubuntu/bin/oci raw-request \
 
 sudo -H -u ubuntu git pull
 
-sudo -H -u ubuntu ./fetch-secrets_oci.sh
+sudo -H -u ubuntu ./fetch-secrets.oci.sh
 
 docker compose -f docker-compose.oci.yml pull
 docker compose -f docker-compose.oci.yml up -d

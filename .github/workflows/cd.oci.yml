@@ -30,7 +30,7 @@ jobs:
             "content": {
               "source": {
                 "sourceType": "TEXT",
-                "text": "sudo -n /usr/local/bin/deploy_oci.sh"
+                "text": "sudo -n /usr/local/bin/deploy.oci.sh"
               },
               "output": { "outputType": "TEXT" }
             },

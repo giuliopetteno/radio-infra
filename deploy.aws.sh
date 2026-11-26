@@ -18,7 +18,7 @@ aws ecr get-login-password --region eu-south-1 | docker login --username AWS --p
 
 sudo -u ssm-user git pull
 
-sudo -u ssm-user ./fetch-secrets.sh
+sudo -u ssm-user ./fetch-secrets.aws.sh
 
 docker compose -f docker-compose.aws.yml pull
 docker compose -f docker-compose.aws.yml up -d
