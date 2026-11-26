@@ -1,0 +1,70 @@
+name: CD OCI
+
+on:
+  repository_dispatch:
+    types: [deploy]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OCI_CLI_REGION: eu-milan-1
+      OCI_CLI_TENANCY: ${{ vars.OCI_TENANCY_OCID }}
+      OCI_CLI_USER: ${{ vars.OCI_USER_OCID }}
+      OCI_CLI_FINGERPRINT: ${{ vars.OCI_API_KEY_FINGERPRINT }}
+      OCI_CLI_KEY_CONTENT: ${{ secrets.OCI_API_PRIVATE_KEY }}
+      INSTANCE_ID: ocid1.instance.oc1.eu-milan-1.anwgsljreuvm56iccjkduhlvwqf6wk5somg5c7c6mm6vsc2dgz3krkt4ryna
+
+    steps:
+      - name: Prepare deploy command
+        run: |
+          cat > command.json <<EOF
+          {
+            "compartmentId": "$OCI_CLI_TENANCY",
+            "target": { "instanceId": "$INSTANCE_ID" },
+            "content": {
+              "source": {
+                "sourceType": "TEXT",
+                "text": "sudo -n /usr/local/bin/deploy_oci.sh"
+              },
+              "output": { "outputType": "TEXT" }
+            },
+            "timeoutInSeconds": 900
+          }
+          EOF
+
+      - name: Trigger deploy via OCI Run Command
+        id: deploy
+        uses: oracle-actions/run-oci-cli-command@v1.3.2
+        with:
+          command: instance-agent command create --from-json file://command.json
+          query: data.id
+
+      - name: Wait for deploy result
+        env:
+          COMMAND_ID: ${{ steps.deploy.outputs.raw_output }}
+        run: |
+          while true; do
+            result=$(oci instance-agent command-execution get \
+              --command-id "$COMMAND_ID" \
+              --instance-id "$INSTANCE_ID")
+
+            state=$(jq -r '.data["lifecycle-state"]' <<< "$result")
+            case "$state" in
+              ACCEPTED|IN_PROGRESS)
+                sleep 15
+                ;;
+              *)
+                echo "Deploy state: $state"
+                jq -r '.data.content.text // empty' <<< "$result"
+                [[ "$state" == "SUCCEEDED" ]] &&
+                  jq -e '.data.content["exit-code"] == 0' <<< "$result" > /dev/null
+                exit $?
+                ;;
+            esac
+          done

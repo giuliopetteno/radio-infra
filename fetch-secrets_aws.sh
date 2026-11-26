@@ -14,7 +14,6 @@ trap 'log "Fetching secrets FAILED at line $LINENO: $BASH_COMMAND"' ERR
 fetch_param() {
   local param_name=$1
   local var_name=$2
-  local error_output
 
   if ! value=$(aws ssm get-parameter --name "$param_name" --with-decryption --query "Parameter.Value" --output text --region eu-south-1 2>&1); then
     log "FAILED to fetch $param_name: $value"

@@ -24,7 +24,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "i-07d2db88d6c9cb9c1" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["sudo /usr/local/bin/deploy.sh"]' \
+            --parameters 'commands=["sudo /usr/local/bin/deploy_aws.sh"]' \
             --query "Command.CommandId" \
             --output text)
           echo "Command ID: $COMMAND_ID"
