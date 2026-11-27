@@ -44,16 +44,11 @@ jobs:
         with:
           command: instance-agent command create --from-json file://command.json
           query: '[data.id]'
-          silent: 'false'
 
       - name: Wait for deploy result
         env:
-          ACTION_OUTPUT: ${{ steps.deploy.outputs.output }}
           COMMAND_ID: ${{ steps.deploy.outputs.raw_output }}
         run: |
-          printf 'Action output: %s\n' "$ACTION_OUTPUT"
-          printf 'COMMAND_ID received: <%q>\n' "$COMMAND_ID"
-
           if [[ ! "$COMMAND_ID" =~ ^ocid1\.instanceagentcommand\.[[:alnum:]._-]+$ ]]; then
             echo "The deploy step did not return a valid Run Command OCID."
             exit 1
