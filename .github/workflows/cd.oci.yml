@@ -50,13 +50,15 @@ jobs:
           COMMAND_ID: ${{ steps.deploy.outputs.raw_output }}
         run: |
           while true; do
-            result=$(oci instance-agent command-execution get \
-              --command-id "$COMMAND_ID" \
-              --instance-id "$INSTANCE_ID")
+            result=$(oci instance-agent command-execution list \
+              --compartment-id "$OCI_CLI_TENANCY" \
+              --instance-id "$INSTANCE_ID" \
+              --all \
+              --query "{data: data[?\"instance-agent-command-id\"=='$COMMAND_ID'] | [0]}")
 
             state=$(jq -r '.data["lifecycle-state"]' <<< "$result")
             case "$state" in
-              ACCEPTED|IN_PROGRESS)
+              ""|null|ACCEPTED|IN_PROGRESS)
                 sleep 15
                 ;;
               *)
