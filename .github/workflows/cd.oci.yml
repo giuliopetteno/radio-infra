@@ -43,12 +43,23 @@ jobs:
         uses: oracle-actions/run-oci-cli-command@v1.3.2
         with:
           command: instance-agent command create --from-json file://command.json
-          query: data.id
+          query: '[data.id]'
+          silent: 'false'
 
       - name: Wait for deploy result
         env:
+          ACTION_OUTPUT: ${{ steps.deploy.outputs.output }}
           COMMAND_ID: ${{ steps.deploy.outputs.raw_output }}
         run: |
+          printf 'Action output: %s\n' "$ACTION_OUTPUT"
+          printf 'COMMAND_ID received: <%q>\n' "$COMMAND_ID"
+
+          if [[ ! "$COMMAND_ID" =~ ^ocid1\.instanceagentcommand\.[[:alnum:]._-]+$ ]]; then
+            echo "The deploy step did not return a valid Run Command OCID."
+            exit 1
+          fi
+
+          missing_checks=0
           while true; do
             result=$(oci instance-agent command-execution list \
               --compartment-id "$OCI_CLI_TENANCY" \
@@ -56,9 +67,18 @@ jobs:
               --all \
               --query "{data: data[?\"instance-agent-command-id\"=='$COMMAND_ID'] | [0]}")
 
-            state=$(jq -r '.data["lifecycle-state"]' <<< "$result")
+            state=$(jq -r '.data["lifecycle-state"] // empty' <<< "$result")
             case "$state" in
-              ""|null|ACCEPTED|IN_PROGRESS)
+              "")
+                missing_checks=$((missing_checks + 1))
+                echo "Run Command not visible yet ($missing_checks/8)."
+                if (( missing_checks >= 8 )); then
+                  exit 1
+                fi
+                sleep 15
+                ;;
+              ACCEPTED|IN_PROGRESS)
+                echo "Deploy state: $state"
                 sleep 15
                 ;;
               *)
